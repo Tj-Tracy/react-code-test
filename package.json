@@ -13,10 +13,10 @@
     "react-scripts": "1.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start-react": "react-scripts start",
+    "start": "node dist/app.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "test-server": "node dist/app.js",
     "eject": "react-scripts eject",
     "build-server": "babel lib -d dist --presets es2015,stage-2",
     "babel": "nodemon lib/app.js --exec babel-node --presets es2015,stage-2"
