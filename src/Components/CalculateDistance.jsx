@@ -5,15 +5,16 @@ class CalculateDistance extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      distance: undefined
+      distance: ""
     }
   }
 
   calculateDistance = (zipOne, zipTwo) => {
-    console.log(zipOne.toString())
+    this.setState({distance: "searching. . ."});
 
     const zipBody = {
       method: "POST",
+      timeout: 1000,
       body: JSON.stringify({ ZipCodeOne: zipOne, ZipCodeTwo: zipTwo }),
       headers: {
         "Content-Type": "application/json"
@@ -46,13 +47,15 @@ class CalculateDistance extends Component {
           let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
           let d = R * c;
           d = d * 0.00062137
-          this.setState({ distance: d });
-
+          this.setState({ distance: Math.ceil(d) + " miles"  });
+        } else {
+          this.setState({distance: "One of the zip codes is not correct."});
         }
-        else
-          zipCodes = null;
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        this.setState({distance: "One of the zip codes is not correct."});
+      });
 
 
   }
@@ -61,7 +64,9 @@ class CalculateDistance extends Component {
     return (
       <div>
         <button onClick={() => this.calculateDistance(this.props.zipOne, this.props.zipTwo)}>Calculate Distance</button>
-        {this.state.distance}
+        <div>
+          {this.state.distance === ""? "" : this.state.distance } 
+        </div>
       </div>
     );
   }

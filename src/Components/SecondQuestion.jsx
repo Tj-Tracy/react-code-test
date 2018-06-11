@@ -15,7 +15,6 @@ class SecondQuestion extends Component {
   }
 
   handleChange = e => {
-    console.log('hi')
     if (parseInt(e.target.value) == e.target.value) {
       if (e.target.value.length > 5) {
         this.setState({ error: "Please only 5 digit zip codes" });
