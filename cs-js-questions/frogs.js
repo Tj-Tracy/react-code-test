@@ -22,7 +22,7 @@ rl.question("n = ", n => {
   let sum = frogs.reduce((sum, current) =>  sum + current, 0);
   
   console.log(frogs);
-  console.log(sum);
-  console.log(sum/frogs.length);
+  console.log("sum of total weight: " + sum);
+  console.log("average after n days: " + sum/frogs.length);
 
 });

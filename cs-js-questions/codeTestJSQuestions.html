@@ -1,0 +1,60 @@
+<html>
+    <table id="tbl" border="1">										<tbody>										
+        <tr>								
+          <td></td>											
+          <td></td>								
+        </tr>											
+      </tbody>											
+    </table>			
+      
+    <button id="btn">
+      Click To Remove
+    </button> 
+
+    
+      
+      <script>
+
+         //grab the button
+         var button = document.getElementById('btn');
+        //set an event handler
+        button.addEventListener('click', disapear);
+
+        function appendRow() {
+          // grab the table
+          var table = document.getElementById('tbl');
+          //get the number of cells in the last row
+          var numberOfCells = table.rows[table.rows.length - 1].cells.length;
+          //create a row with the same number of cells
+          var newRow = table.insertRow();
+          for (let i = 0; i < numberOfCells; i++) {
+            newRow.insertCell();
+          }
+        }
+
+        function disapear() {
+          button.style.visibility = 'hidden';
+          setTimeout( function () {
+            button.style.visibility = 'visible';
+          }, 1000)
+        }
+
+        let array = [1, 'a', 2, 'b'];
+        
+        //This function will modify the existing array, as per the test
+        function removeNonInt() {
+          array = array.filter(function(element) {
+            return parseInt(element) === element
+          });
+        }
+       
+        //modify the array
+        console.log(array);
+        removeNonInt();
+        console.log(array);
+
+        //append the row
+        appendRow();
+      </script>
+</html>
+
