@@ -77,17 +77,17 @@ db.once('open', function () {
 //       LocationType: data[i + 4],
 //       Lat: data[i + 5],
 //       Long: data[i + 6],
-//       Location: data[i+7],
-//       Decommisioned: data[i+8],
-//       TaxReturnsFiled: data[i+9],
-//       EstimatedPopulation: data[i+10],
-//       TotalWages: data[i+11]
+//       Location: data[i + 7],
+//       Decommisioned: data[i + 8],
+//       TaxReturnsFiled: data[i + 9],
+//       EstimatedPopulation: data[i + 10],
+//       TotalWages: data[i + 11]
 //     }
 //     zipCodeJSON.push(newCode);
 //   }
-//   //console.log(zipCodeJSON);
-//   zipCodeJSON.map(item => {
 
+
+//   zipCodeJSON.map(item => {
 //     const newZip = new ZipCode({
 //       ZipCode: item.ZipCode,
 //       Lat: item.Lat,
@@ -101,9 +101,11 @@ db.once('open', function () {
 //         console.log("saved");
 
 //       }
-//     })
+//     });
+
+
 //   })
-//})
+// });
 
 app.get("/", function (req, res) {
   res.sendFile(_path2.default.join(__dirname, "../build", "index.html"));
@@ -113,14 +115,29 @@ app.post("/zipLookup", function (req, res) {
   var zipOne = req.body.ZipCodeOne.toString();
   var zipTwo = req.body.ZipCodeTwo.toString();
   _zipcode2.default.find({
-    $or: [{ ZipCode: zipOne }, { ZipCode: zipTwo }] }, 'ZipCode Long Lat', function (err, zip) {
-    if (!zip) {
-      return res.json({ success: false, reason: "No zip Code" });
+    $or: [{
+      ZipCode: zipOne
+    }, {
+      ZipCode: zipTwo
+    }]
+  }, 'ZipCode Long Lat', function (err, zip) {
+    if (zip[0] && zip[1]) {
+      return res.json({
+        success: true,
+        zip: zip
+      });
     }
     if (err) {
-      return res.json({ success: false, reason: err });
+      return res.json({
+        success: false,
+        reason: err
+      });
     }
-    return res.json({ success: true, zip: zip });
+    console.log('hi');
+    return res.json({
+      success: false,
+      reason: "No zip Code"
+    });
   });
 });
 
